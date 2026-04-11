@@ -1,3 +1,5 @@
+ /* This is the font design  */
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f4f4f4;
@@ -5,4 +7,19 @@ body {
 
 h1 {
   color: darkblue;
+}
+
+/* <!-- This is the layout for each business --> */
+
+#directory {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  width: 200px;
 }
