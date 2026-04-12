@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Eco-Connect </title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoConnect Coventry</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="logo-section">
+      <h1>EcoConnect Coventry </h1>
+      <p>Discover sustainable businesses in Coventry</p>
+    </div>
 
-    <h1 id="main-heading">EcoConnect Coventry </h1>
-    <div class="content">
-      <p>This page will display the businesses in Coventry.</p>
-      <button id="actionBtn">Click Me</button>
-      <div id="directory"></div>
-      <script src='script.js' defer></script>
+    <!-- Log in section  -->
 
-  </div>
-  
+    <div class="user-section">
+      <button class="login-btn">Log In</button>
+      <div class="profile-card">
+        <span class="profile-avatar">G</span>
+        <span class="profile-name">Guest</span>
+      </div>
+    </div>
+  </header>
 
+  <!-- This is for the search bar  --> 
+
+  <main class="main-content">
+    <section class="search-section">
+      <input type="text" placeholder="Search Eco businesses..." class="search-input">
+      <button class="search-btn">Search</button>
+    </section>
+
+    <section class="filter-section">
+      <button class="filter-btn">Zero Waste</button>
+      <button class="filter-btn">Organic Food</button>
+      <button class="filter-btn">Repair Cafes</button>
+      <button class="filter-btn">Local Producers</button>
+    </section>
+
+    <section id="directory" class="business-grid"></section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
 
