@@ -161,3 +161,31 @@ function viewBusiness(businessId) {
 function goHome() {
   document.getElementById("directory").innerHTML = cards;
 }
+
+// this is for a example business profile
+
+function showProfilePage() {
+  const business = businesses[0];
+
+  const reviewHtml = business.reviews
+    .map((review) => `<li>${review}</li>`)
+    .join("");
+
+  const profile = `
+    <div class="profile-page">
+      <h2>${business.name}</h2>
+      <img src="${business.image}" alt="${business.name}" class="business-image">
+      <p><strong>Category:</strong> ${business.category}</p>
+      <p><strong>Location:</strong> ${business.location}</p>
+      <p><strong>Rating:</strong> ${business.rating} ⭐</p>
+      <p>${business.description}</p>
+
+      <h3>Reviews</h3>
+      <ul>
+        ${reviewHtml}
+      </ul>
+    </div>
+  `;
+
+  document.getElementById("directory").innerHTML = profile;
+}
