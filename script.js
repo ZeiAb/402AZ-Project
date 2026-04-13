@@ -116,7 +116,7 @@ function addReview(businessId) {
   ratingSelect.value = "5";
 }
 
-// This is for viewing the business
+// This is for viewing each business
 
 function viewBusiness(businessId) {
   const business = businesses.find(b => b.id === businessId);
