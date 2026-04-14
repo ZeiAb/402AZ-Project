@@ -21,7 +21,7 @@ const businesses = [
     location: "14 Market Way",
     description: "Plastic-free groceries, refill stations, and local produce.",
     rating: 4.7,
-    image: "Images/business1.jpg",
+    image: "Imagess/business1.jpg",
     reviews: [
       "Very friendly staff, fressh produce."
     ]
@@ -33,7 +33,7 @@ const businesses = [
     location: "96 Earlsdon Street",
     description: "Wide range of wholefoods, fairly traded goods and locally sourced produce.",
     rating: 4.5,
-    image: "Images/buisness2.jpeg",
+    image: "Imagess/business2.jpeg",
     reviews: [
       "Great refill station and very friendly staff.",
       "Good choice of stustainable prodocts."
@@ -46,7 +46,7 @@ const businesses = [
     location: "41 Russell Street",
     description: "Eco cleaning product refills, plastic free toiletries and locally sourced produce.",
     rating: 5,
-    image: "Images/business3.jpeg",
+    image: "Imagess/business3.jpeg",
     reviews: [
       "Lovely fresh produce.",
       "Really good cleaning product selection."
