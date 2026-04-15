@@ -1,3 +1,9 @@
+
+Coventry EcoConnect is a severless web application that is designed to promote sustainable livining by connecting different users with eco conscious businesses in Coventry. This platform allows visiors to browse local gren businesses and it allows users to register to sumbit ratings and reviews. This platform is build with React and Typescript on frontend and AWS lambda, API Gateway, DynamoDB and AWS Cognito for the backend.
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

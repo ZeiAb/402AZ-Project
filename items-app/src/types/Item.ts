@@ -1,3 +1,10 @@
+export type Review = {
+  id: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
 export type Item = {
   id: number
   name: string
@@ -5,5 +12,6 @@ export type Item = {
   description: string
   image: string;
   address: string;
-  rating: number;
+  rating?: number;
+  reviews?: Review[];
   };

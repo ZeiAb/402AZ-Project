@@ -1,33 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./components/Header"
-import Footer from "./components/Footer"
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import Directory from "./pages/Directory";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Businesspage from "./pages/Businesspage";
 
-import Home from "./pages/Home"
-import Items from "./pages/Items"
-import Item from "./pages/Item"
-
-function App() {
-
-return (
-  <BrowserRouter>
-
-    <Header />
-
-      <main className="p-6">
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/items" element={<Items />} />
-        <Route path="/items/:id" element={<Item />} />
-      </Routes>
-
-  </main>
-
-  <Footer />
-
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/directory" element={<Directory/>} />
+          <Route path="/businesses/:id" element={<Businesspage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+    <Footer />
 </BrowserRouter>
-  )
+  );
 }
 
-export default App
