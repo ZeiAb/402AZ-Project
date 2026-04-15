@@ -1,8 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { mockItems } from "../data/mockItems";
+import ReviewList from "../components/ReviewList";
+import ReviewForm from "../components/ReviewForm";
+import RatingStars from "../components/RatingStars";
 
 export default function Businesspage() {
   const { id } = useParams();
+
   const business = mockItems.find((item) => item.id === id);
 
   if (!business) {
@@ -13,29 +17,38 @@ export default function Businesspage() {
           Back to Directory
         </Link>
       </section>
-  );
-}
+    );
+  }
 
-return (
-  <section className="p-8">
-    <Image
-    src={business.image}
-    alt={business.name}
-    className="w-full max-h-96 object-cover rounded mb-6"
-  />
+  return (
+    <section className="p-8">
+      <img
+        src={business.image}
+        alt={business.name}
+        className="w-full max-w-xl h-64 object-cover rounded mb-6"
+      />
 
-  <span className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm mb-4">
-    {business.category}
-  </span>
+      <h1 className="text-3xl font-bold mb-4">{business.name}</h1>
+      <p className="text-gray-600 mb-2">{business.category}</p>
+      <p className="mb-4">{business.description}</p>
+      <p className="mb-4">
+        <strong>Address:</strong> {business.address}
+      </p>
 
-  <h1 className="text-3xl font-bold">{business.nam}</h1>
-  <p className="mb-4">{business.fulldescription}</p>
-  <p className="mb-2">
-    <strong>Address:</strong> {business.address}
-  </p>
+      {business.rating && (
+        <div className="mb-6">
+          <RatingStars rating={business.rating} />
+        </div>
+      )}
 
-  <Link to="/directory" className="text-blue-600 underline">
-    Back to Directory
+      <h2 className="text-2xl font-semibold mt-8 mb-4">Reviews</h2>
+      <ReviewList reviews={business.reviews || []} />
+
+      <h2 className="text-2xl font-semibold mt-8 mb-4">Leave a Review</h2>
+      <ReviewForm />
+
+      <Link to="/directory" className="inline-block mt-6 text-blue-600 underline">
+        Back to Directory
       </Link>
     </section>
   );
