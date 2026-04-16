@@ -7,7 +7,8 @@ import Directory from "./pages/Directory";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Businesspage from "./pages/Businesspage";
-
+import "./App.css";
+import ForgotPassword from "./pages/ForgotPassword"
 export default function App() {
   return (
     <BrowserRouter>
