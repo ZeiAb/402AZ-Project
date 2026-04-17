@@ -3,7 +3,7 @@ import Businesscard from "../components/Businesscard";
 import { getBusinesses } from "../services/api";
 
 type Business = {
-  id: number;
+  id: string;
   name: string;
   category: string;
   description: string;
@@ -21,8 +21,19 @@ export default function Directory() {
     async function loadBusinesses() {
       try {
         const data = await getBusinesses();
-        console.log("Businesses from API:", data);
-        setItems(data);
+
+        const withImages = data.map((item: any, index: number) => ({
+          ...item,
+          image:
+            index === 1
+              ? "/images/business2.jpeg"
+              : index === 2
+              ? "/images/business3.jpeg"
+              : "/images/business1.jpg",
+        }));
+
+        console.log("Businesses with images:", withImages);
+        setItems(withImages);
       } catch (error) {
         console.error("Failed to load businesses:", error);
       }
