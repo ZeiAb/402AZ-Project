@@ -1,29 +1,77 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
 import { mockItems } from "../data/mockItems";
 import ReviewList from "../components/ReviewList";
 import ReviewForm from "../components/ReviewForm";
 import RatingStars from "../components/RatingStars";
-import { getCurrentUser } from "../services/auth";
+import { getLoggedInUser } from "../services/auth";
+import { getBusinessById, getReviewsByBusiness, createReview,} from "../services/api";
+import { useEffect, useState } from "react";
 
 type Review = {
-  id: string;
+  businessId: number;
+  reviewid: string;
   userName: string;
   rating: number;
   comment: string;
   createdAt: string;
 };
 
+type Business = {
+  id: Number;
+  name: string;
+  category: string;
+  description: string;
+  address: string;
+  image: string;
+  rating?: number;
+};
+
 export default function Businesspage() {
   const { id } = useParams();
-  const business = mockItems.find((item) => item.id === id);
-  const currentUser = getCurrentUser();
+  const [business, setBusiness] = useState<Business | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
-  const [reviews, setReviews] = useState<Review[]>(business?.reviews || []);
+  useEffect(() => {
+    async function loadPage() {
+      try {
+        if (!id) return;
 
-  const handleAddReview = (newReview: Review) => {
-    setReviews((prevReviews) => [newReview, ...prevReviews]);
-  };
+        const [businessData, reviewData, user] = await Promise.all([
+          getBusinessById(id),
+          getReviewsByBusiness(id),
+          getLoggedInUser(),
+        ]);
+
+        setBusiness(businessData);
+        setReviews(reviewData);
+        setCurrentUser(user);
+      } catch (error) {
+        console.error("Failed to load business page", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPage();
+  }, [id]);
+
+  async function handleAddReview(newReview: {
+    userName?: string;
+    rating: number;
+    comment: string;
+    createdAt?: string;
+  }) {
+    if (!id) return;
+
+    const created = await createReview(id, newReview);
+    setReviews((prev) => [created, ...prev]);
+  }
+
+  if (loading) {
+    return <section className="p-8">Loading business...</section>;
+  }
 
   if (!business) {
     return (
@@ -47,7 +95,6 @@ export default function Businesspage() {
       <h1 className="text-4xl font-bold mb-2">{business.name}</h1>
       <p className="text-gray-600 mb-3">{business.category}</p>
       <p className="mb-4 text-lg">{business.description}</p>
-
       <p className="mb-4">
         <strong>Address:</strong> {business.address}
       </p>
@@ -62,13 +109,10 @@ export default function Businesspage() {
       <ReviewList reviews={reviews} />
 
       <h2 className="text-2xl font-semibold mt-8 mb-4">Leave a Review</h2>
-
       {currentUser ? (
         <ReviewForm onAddReview={handleAddReview} />
       ) : (
-        <p className="text-red-600">
-          You must be logged in to leave a review.
-        </p>
+        <p className="text-red-600">You must be logged in to leave a review.</p>
       )}
 
       <Link

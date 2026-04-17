@@ -1,18 +1,22 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getCurrentUser, logoutUser } from '../services/auth';
-import { useEffect, useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getLoggedInUser, logoutUser } from "../services/auth";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    setUser(getCurrentUser());
+    async function loadUser() {
+      const currentUser = await getLoggedInUser();
+      setUser(currentUser);
+    }
+
+    loadUser();
   }, []);
 
-  const handleLogout = () => {
-    logoutUser();
+  const handleLogout = async () => {
+    await logoutUser();
     setUser(null);
     navigate("/login");
   };
@@ -21,23 +25,18 @@ export default function Navbar() {
     <nav className="bg-green-700 text-white px-6 py-3 shadow-md">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <div>
-          <h1 className="text-lg font-bold leading-tight">
-            Coventry EcoConnect
-          </h1>
-          <span className="text-xs text-green-100">7380053</span>
+          <h1 className="text-2xl font-bold leading-tight">Coventry EcoConnect</h1>
+          <span className="text-sm text-green-100">7380053</span>
         </div>
 
-        <div className="flex items-center space-x-6 text-sm font-medium">
+        <div className="flex items-center gap-6 text-sm font-medium">
           <Link to="/" className="hover:text-green-200">Home</Link>
           <Link to="/directory" className="hover:text-green-200">Directory</Link>
 
           {user ? (
             <>
-              <span className="text-green-100">Hi, {user.name}</span>
-              <button
-                onClick={handleLogout}
-                className="hover:text-green-200"
-              >
+              <span className="text-green-100">Hi</span>
+              <button onClick={handleLogout} className="hover:text-green-200">
                 Logout
               </button>
             </>

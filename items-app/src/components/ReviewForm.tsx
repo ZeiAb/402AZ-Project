@@ -1,6 +1,15 @@
 import { useState } from "react";
 
-export default function ReviewForm() {
+type Props = {
+  onAddReview: (newReview: {
+    userName?: string;
+    rating: number;
+    comment: string;
+    createdAt?: string;
+  }) => void;
+};
+
+export default function ReviewForm({ onAddReview }: Props) {
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
@@ -8,7 +17,12 @@ export default function ReviewForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    alert(`Review submitted by ${name} with rating ${rating}`);
+    onAddReview({
+      userName: name,
+      rating,
+      comment,
+      createdAt: new Date().toISOString().split("T")[0],
+    });
 
     setName("");
     setComment("");
@@ -46,7 +60,7 @@ export default function ReviewForm() {
 
       <button
         type="submit"
-        className="bg-green-600 text-black px-4 py-2 rounded border border-black"
+        className="bg-green-600 text-white px-5 py-3 rounded border border-black"
       >
         Submit Review
       </button>

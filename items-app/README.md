@@ -1,8 +1,13 @@
+Coventry EcoConnect is a severless web application that is designed to promote sustainable liviing by
+connecting different users with eco conscious businesses in Coventry. This platform allows visiors to
+browse local green businesses and it allows users to register to sumbit ratings and reviews. This platform
+is build with React and Typescript on frontend and AWS lambda, API Gateway, DynamoDB and AWS Cognito f
+or the backend.
 
-Coventry EcoConnect is a severless web application that is designed to promote sustainable livining by connecting different users with eco conscious businesses in Coventry. This platform allows visiors to browse local gren businesses and it allows users to register to sumbit ratings and reviews. This platform is build with React and Typescript on frontend and AWS lambda, API Gateway, DynamoDB and AWS Cognito for the backend.
+example email:
 
-
-
+email : example@hotmail.com
+password : coventry123
 
 # React + TypeScript + Vite
 
@@ -23,9 +28,9 @@ If you are developing a production application, we recommend updating the config
 
 ```js
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       // Other configs...
 
@@ -40,40 +45,40 @@ export default defineConfig([
     ],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       // other options...
     },
   },
-])
+]);
 ```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       // Other configs...
       // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
+      reactX.configs["recommended-typescript"],
       // Enable lint rules for React DOM
       reactDom.configs.recommended,
     ],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       // other options...
     },
   },
-])
+]);
 ```

@@ -1,5 +1,11 @@
-import type { Review } from "../types/Review";
-import RatingStars from "./RatingStars";
+type Review = {
+  businessId: number;
+  reviewId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+};
 
 type Props = {
   reviews: Review[];
@@ -7,17 +13,17 @@ type Props = {
 
 export default function ReviewList({ reviews }: Props) {
   if (reviews.length === 0) {
-    return <p>No reviews yet.</p>;
+    return <p className="text-gray-600">No reviews yet.</p>;
   }
 
   return (
     <div className="space-y-4">
       {reviews.map((review) => (
-        <div key={review.id} className="border p-4 rounded bg-white">
-          <p className="font-bold">{review.userName}</p>
-          <p>Rating: {review.rating}/5</p>
-          <p>{review.comment}</p>
-          <p className="text-sm text-gray-500">{review.createdAt}</p>
+        <div key={review.reviewId} className="border rounded p-4 bg-white">
+          <h3 className="font-semibold">{review.userName}</h3>
+          <p className="text-sm text-gray-600">Rating: {review.rating}/5</p>
+          <p className="mt-2">{review.comment}</p>
+          <p className="text-xs text-gray-500 mt-2">{review.createdAt}</p>
         </div>
       ))}
     </div>

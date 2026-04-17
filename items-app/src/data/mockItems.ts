@@ -2,7 +2,7 @@ import type { Item } from "../types/Item";
 
 export const mockItems: Item[] = [
   {
-    id: "1",
+    id: 1,
     name: "Green Leaf Cafe",
     category: "Cafe",
     description: "A sustainable local cafe using eco-friendly packaging.",
@@ -20,7 +20,7 @@ export const mockItems: Item[] = [
     ],
   },
   {
-    id: "2",
+    id: 2,
     name: "Eco Mart",
     category: "Shop",
     description: "Organic and plastic-free grocery store.",
@@ -29,7 +29,7 @@ export const mockItems: Item[] = [
     rating: 4.2,
   },
   {
-    id: "3",
+    id: 3,
     name: "CycleFix Coventry",
     category: "Repair",
     description: "Bike repair and reuse workshop promoting green travel.",

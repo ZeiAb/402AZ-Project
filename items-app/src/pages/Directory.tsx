@@ -1,15 +1,40 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Businesscard from "../components/Businesscard";
-import { mockItems } from "../data/mockItems";
+import { getBusinesses } from "../services/api";
+
+type Business = {
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  address: string;
+  image: string;
+  rating?: number;
+};
 
 export default function Directory() {
+  const [items, setItems] = useState<Business[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", ...new Set(mockItems.map((item) => item.category))];
+  useEffect(() => {
+    async function loadBusinesses() {
+      try {
+        const data = await getBusinesses();
+        console.log("Businesses from API:", data);
+        setItems(data);
+      } catch (error) {
+        console.error("Failed to load businesses:", error);
+      }
+    }
+
+    loadBusinesses();
+  }, []);
+
+  const categories = ["All", ...new Set(items.map((item) => item.category))];
 
   const filteredItems = useMemo(() => {
-    return mockItems.filter((item) => {
+    return items.filter((item) => {
       const matchesSearch =
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -20,14 +45,11 @@ export default function Directory() {
 
       return matchesSearch && matchesCategory;
     });
-  }, [searchTerm, selectedCategory]);
+  }, [items, searchTerm, selectedCategory]);
 
   return (
     <section className="p-8">
       <h1 className="text-3xl font-bold mb-4">Business Directory</h1>
-      <p className="mb-6">
-        Browse eco-conscious businesses across Coventry.
-      </p>
 
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <input
@@ -61,4 +83,3 @@ export default function Directory() {
     </section>
   );
 }
-

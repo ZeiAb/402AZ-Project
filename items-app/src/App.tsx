@@ -8,7 +8,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Businesspage from "./pages/Businesspage";
 import "./App.css";
+import { Amplify } from "aws-amplify";
 import ForgotPassword from "./pages/ForgotPassword"
+import { Authenticator } from "@aws-amplify/ui-react"
+
 export default function App() {
   return (
     <BrowserRouter>

@@ -1,84 +1,67 @@
-type User = {
-  name: string;
-  email: string;
-  password: string;
-};
+import {
+  signUp,
+  signIn,
+  signOut,
+  getCurrentUser,
+  resetPassword,
+  confirmResetPassword,
+  fetchAuthSession,
+} from "aws-amplify/auth";
 
-const USERS_KEY = "ecoconnect_users";
-const CURRENT_USER_KEY = "ecoconnect_current_user";
-
-function getUsers(): User[] {
-  const storedUsers = localStorage.getItem(USERS_KEY);
-  return storedUsers ? JSON.parse(storedUsers) : [];
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string
+) {
+  return await signUp({
+    username: email,
+    password,
+    options: {
+      userAttributes: {
+        email,
+        name,
+      },
+    },
+  });
+}
+export async function loginUser(email: string, password: string) {
+  return await signIn({
+    username: email,
+    password,
+  });
 }
 
-function saveUsers(users: User[]) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+export async function logoutUser() {
+  return await signOut();
 }
 
-export function registerUser(user: User) {
-  const users = getUsers();
-
-  const existingUser = users.find((u) => u.email === user.email);
-  if (existingUser) {
-    throw new Error("An account with this email already exists.");
+export async function getLoggedInUser() {
+  try {
+    return await getCurrentUser();
+  } catch {
+    return null;
   }
-
-  users.push(user);
-  saveUsers(users);
-
-  localStorage.setItem(
-    CURRENT_USER_KEY,
-    JSON.stringify({
-      name: user.name,
-      email: user.email,
-    })
-  );
 }
 
-export function loginUser(email: string, password: string) {
-  const users = getUsers();
-
-  const user = users.find(
-    (u) => u.email === email && u.password === password
-  );
-
-  if (!user) {
-    throw new Error("Invalid email or password.");
-  }
-
-  localStorage.setItem(
-    CURRENT_USER_KEY,
-    JSON.stringify({
-      name: user.name,
-      email: user.email,
-    })
-  );
+export async function getIdToken() {
+  const session = await fetchAuthSession();
+  return session.tokens?.idToken?.toString() || "";
 }
 
-export function logoutUser() {
-  localStorage.removeItem(CURRENT_USER_KEY);
+export async function startForgotPassword(email: string) {
+  return await resetPassword({
+    username: email,
+  });
 }
 
-export function getCurrentUser() {
-  const user = localStorage.getItem(CURRENT_USER_KEY);
-  return user ? JSON.parse(user) : null;
-}
-
-export function isLoggedIn() {
-  return !!localStorage.getItem(CURRENT_USER_KEY);
-}
-
-export function resetPassword(email: string, newPassword: string) {
-  const users = getUsers();
-
-  const userIndex = users.findIndex((u) => u.email === email);
-
-  if (userIndex === -1) {
-    throw new Error("No account found with this email.");
-  }
-
-  users[userIndex].password = newPassword;
-
-  saveUsers(users);
+export async function finishForgotPassword(
+  email: string,
+  code: string,
+  newPassword: string
+) {
+  return await confirmResetPassword({
+    username: email,
+    confirmationCode: code,
+    newPassword,
+  });
 }
